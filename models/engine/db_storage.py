@@ -75,8 +75,7 @@ class DBStorage:
         """method to retrive one object based on its id and cls"""
         objs = self.all(cls)
         for k, v in objs.items():
-            key == cls + '.' + id
-            if k == key:
+            if k == cls + '.' + id:
                 return v
         return None
 
