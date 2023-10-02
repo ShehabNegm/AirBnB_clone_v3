@@ -16,8 +16,8 @@ def handle_cities_by_state(state_id):
     if stats is None:
         abort(404)
 
-    if request.mehtod == 'GET':
-        cities = [city.todict() for city in state.cities]
+    if request.method == 'GET':
+        cities = [city.to_dict() for city in state.cities]
         return jsonify(cities)
 
     if request.method == 'POST':
@@ -60,3 +60,6 @@ def handle_city(city_id):
         storage.delete(city)
         storage.save()
         return jsonify({}), 200
+
+if __name__ == "__main__":
+    pass
