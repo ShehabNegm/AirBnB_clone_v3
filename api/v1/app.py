@@ -24,7 +24,7 @@ def page_not_found(error):
     Handels error code 404
     """
     code_response = {
-            "error": "Not fount"
+            "error": "Not found"
     }
     return jsonify(code_response), 404
 
