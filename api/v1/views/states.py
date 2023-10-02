@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """states view"""
 
-from flask import jsonify, make_response, request
+from flask import jsonify, make_response, request, abort
 from api.v1.views import app_views
 from models import storage
 from models.state import State
@@ -35,9 +35,12 @@ def id_state(state_id):
         return jsonify(state.to_dict())
 
     if request.method == 'DELETE':
-        storage.delete(state)
-        storage.save()
-        return make_response(jsonify({}), 200)
+        try:
+            storage.delete(state)
+            storage.save()
+            return make_response(jsonify({}), 200)
+        except Exception:
+            abort(404)
 
     if request.method == 'PUT':
         if not request.json:
@@ -46,4 +49,4 @@ def id_state(state_id):
             if k not in ['id', 'created_at', 'updated_at']:
                 setattr(state, k, v)
             state.save()
-            return make_responce(jsonify(state.to_dict()), 200)
+            return make_response(jsonify(state.to_dict()), 200)
