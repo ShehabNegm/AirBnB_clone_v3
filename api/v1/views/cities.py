@@ -15,7 +15,7 @@ def handle_cities_by_state(state_id):
     """carries out requests on all City objects of a State"""
     state = storage.get(State, state_id)
     if state is None:
-        abort(404, 'Not found')
+        abort(404)
 
     if request.method == 'GET':
         cities = [city.to_dict() for city in state.cities]
@@ -44,8 +44,7 @@ def handle_city(city_id):
         abort(404)
 
     if request.method == 'GET':
-        city = city.to_dict()
-        return jsonify(city)
+        return jsonify(city.to_dict())
 
     if request.method == 'PUT':
         response = request.get_json()
