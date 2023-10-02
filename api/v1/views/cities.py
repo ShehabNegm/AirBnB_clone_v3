@@ -9,7 +9,8 @@ from models.city import City
 from api.v1.views import app_views
 
 
-@app_views.route('/states/<state_id>/cities', methods=['GET', 'POST']), strict_slashes=False)
+@app_views.route('/states/<state_id>/cities', methods=[
+    'GET', 'POST'], strict_slashes=False)
 def handle_cities_by_state(state_id):
     """carries out requests on all City objects of a State"""
     state = storage.get(State, state_id)
@@ -21,7 +22,7 @@ def handle_cities_by_state(state_id):
         return jsonify(cities)
 
     if request.method == 'POST':
-        response =  request.get_json()
+        response = request.get_json()
         if response is None:
             abort(400, 'Not a JSON')
 
@@ -33,7 +34,9 @@ def handle_cities_by_state(state_id):
         new_city.save()
         return jsonify(new_city.to_dict()), 201
 
-@app_views.route('/cities/<city_id>', methods=['GET', 'PUT', 'DELETE'], strict_slashes=False)
+
+@app_views.route('/cities/<city_id>', methods=[
+    'GET', 'PUT', 'DELETE'], strict_slashes=False)
 def handle_city(city_id):
     """performs all methods on a city object"""
     city = storage.get(City, city_id)
@@ -55,11 +58,12 @@ def handle_city(city_id):
                 setattr(city, key, value)
         city.save()
         return jsonify(city.to_dict()), 200
-    
+
     if request.method == 'DELETE':
         storage.delete(city)
         storage.save()
         return jsonify({}), 200
+
 
 if __name__ == "__main__":
     pass
