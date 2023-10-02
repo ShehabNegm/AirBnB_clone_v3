@@ -63,7 +63,3 @@ def handle_city(city_id):
         storage.delete(city)
         storage.save()
         return jsonify({}), 200
-
-
-if __name__ == "__main__":
-    pass
