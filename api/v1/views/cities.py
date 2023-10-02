@@ -14,7 +14,7 @@ from api.v1.views import app_views
 def handle_cities_by_state(state_id):
     """carries out requests on all City objects of a State"""
     state = storage.get(State, state_id)
-    if stats is None:
+    if state is None:
         abort(404, 'Not found')
 
     if request.method == 'GET':
