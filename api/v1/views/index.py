@@ -11,6 +11,7 @@ def get_status():
     """status endpoint"""
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/stats')
 def get_count():
     count_dict = {"amenities": 'Amenity',
