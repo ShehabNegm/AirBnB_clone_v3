@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""states view"""
+"""Users view"""
 
 from flask import jsonify, make_response, request, abort
 from api.v1.views import app_views
@@ -7,7 +7,7 @@ from models import storage
 from models.user import User
 
 
-@app_views.route('/amenities/', methods=['GET', 'POST'], strict_slashes=False)
+@app_views.route('/users/', methods=['GET', 'POST'], strict_slashes=False)
 def all_users():
     """function to get all users or post new one"""
     if request.method == 'GET':
@@ -18,7 +18,7 @@ def all_users():
             abort(400, 'Not a JSON')
         if 'name' not in request.json:
             abort(400, 'Missing name')
-        new_user = Amenity(**request.get_json())
+        new_user = User(**request.get_json())
         new_user.save()
         return make_response(jsonify(new_user.to_dict()), 201)
 
