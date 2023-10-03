@@ -22,6 +22,7 @@ def all_amenities():
         new_amenity.save()
         return make_response(jsonify(new_amenity.to_dict()), 201)
 
+
 @app_views.route('/amenities/<amenity_id>', methods=['GET', 'DELETE', 'PUT'],
                  strict_slashes=False)
 def id_amenity(amenity_id):
