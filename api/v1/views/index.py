@@ -14,7 +14,7 @@ def get_status():
 
 @app_views.route('/stats')
 def get_count():
-    """Counts dicts"""
+    """Returns the count of all class objects"""
     count_dict = {"amenities": 'Amenity',
                   "cities": 'City',
                   "places": 'Place',
