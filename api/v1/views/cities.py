@@ -13,9 +13,9 @@ from api.v1.views import app_views
     'GET', 'POST'], strict_slashes=False)
 def handle_cities_by_state(state_id):
     """carries out requests on all City objects of a State"""
-    state = storage.get(State, state_id)
+    state = storage.get('State', state_id)
     if state is None:
-        abort(404)
+        abort(404, 'Not found')
 
     if request.method == 'GET':
         cities = [city.to_dict() for city in state.cities]
@@ -30,7 +30,9 @@ def handle_cities_by_state(state_id):
         if name is None:
             abort(400, 'Missing name')
 
-        new_city = City(name=name, state_id=state_id)
+        new_city = request.get_json()
+        new_city = City(**new_data)
+        new_city.state_id = state.id
         new_city.save()
         return jsonify(new_city.to_dict()), 201
 
@@ -39,19 +41,20 @@ def handle_cities_by_state(state_id):
     'GET', 'PUT', 'DELETE'], strict_slashes=False)
 def handle_city(city_id):
     """performs all methods on a city object"""
-    city = storage.get(City, city_id)
+    city = storage.get('City', city_id)
     if city is None:
         abort(404)
 
     if request.method == 'GET':
-        return jsonify(city.to_dict())
+        city_dict = city.to_dict()
+        return jsonify(city_dict)
 
     if request.method == 'PUT':
         response = request.get_json()
         if response is None:
             abort(400, 'Not a JSON')
 
-        existing_keys = ['id', 'state_is', 'created_at', 'updated_at']
+        existing_keys = ['id', 'state_id', 'created_at', 'updated_at']
         for key, value in response.items():
             if key not in existing_keys:
                 setattr(city, key, value)
